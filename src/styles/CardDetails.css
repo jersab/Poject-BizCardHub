@@ -1,0 +1,234 @@
+/* CardDetails.css */
+.card-details-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 15px;
+}
+
+.card-details-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #333;
+}
+
+.card-details-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* כרטיס בצד שמאל */
+.card-details-bcard-container {
+    flex: 1;
+    min-width: 45%;
+    order: 1; /* שינוי המיקום לצד שמאל */
+}
+
+.card-details-bcard {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-details-bcard-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-details-bcard-body {
+    padding: 1rem;
+}
+
+.card-details-bcard-title {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.card-details-bcard-subtitle {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.card-details-bcard-text {
+    margin-bottom: 0;
+}
+
+.card-details-bcard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-details-bcard-list li {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-details-bcard-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.card-details-bcard-icons a {
+    margin-right: 15px;
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.card-details-bcard-icons a:hover {
+    color: #007bff;
+}
+
+.card-details-like-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #6c757d;
+}
+
+.heart-liked {
+    color: #dc3545;
+}
+
+/* מפה בצד ימין */
+.card-details-map-container {
+    flex: 1;
+    min-width: 45%;
+    order: 2; /* שינוי המיקום לצד ימין */
+}
+
+.card-details-map-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-details-map-header {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+}
+
+.card-details-map-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.card-details-map-header h3 i {
+    margin-right: 10px;
+}
+
+.card-details-map-body {
+    padding: 0;
+}
+
+.map-wrapper {
+    position: relative;
+    height: 400px;
+}
+
+.map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.map-button {
+    background-color: white;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.map-button:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.map-button i {
+    margin-right: 8px;
+}
+
+.card-details-map-footer {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.card-details-map-footer h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.card-details-map-footer address {
+    margin-bottom: 0;
+}
+
+/* כפתור חזרה במרכז למטה */
+.card-details-back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.card-details-back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.card-details-back-button:hover {
+    background-color: #0069d9;
+}
+
+/* רספונסיביות */
+@media (max-width: 768px) {
+    .card-details-content {
+        flex-direction: column;
+    }
+    
+    .card-details-map-container,
+    .card-details-bcard-container {
+        width: 100%;
+    }
+    
+    /* סדר צפייה במסכים קטנים */
+    .card-details-bcard-container {
+        order: 1;
+    }
+    
+    .card-details-map-container {
+        order: 2;
+    }
+}

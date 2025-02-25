@@ -1,0 +1,101 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* סגנונות בסיסיים */
+.app-container {
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px; 
+}
+
+.card {  
+  width: 18rem; 
+  height: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  height: 200px; 
+  object-fit: cover; 
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+.phone {
+  text-align: end;
+}
+
+/* Dark Mode */
+body.dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+body.dark .card {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+body.dark .card-body,
+body.dark .card-title,
+body.dark .card-subtitle {
+  color: #ffffff;
+}
+
+body.dark .list-group-item {
+  background-color: #333;
+  color: #ffffff;
+  border-color: #444;
+}
+
+body.dark .navbar {
+  background-color: #1a1a1a !important;
+  border-bottom: 1px solid #444;
+}
+
+body.dark .form-control {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #ffffff;
+}
+
+body.dark .btn-outline-primary {
+  color: #ffffff;
+  border-color: #007bff;
+}
+
+/* Light Mode */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+  
+  .row {
+    gap: 10px;
+  }
+}
+

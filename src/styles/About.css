@@ -1,0 +1,77 @@
+/* סגנונות מיוחדים לדף האודות */
+
+/* הגדרות לקונטיינר הראשי */
+.about-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+  
+  /* סידור 4 פריטים בשורה */
+  .features-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* עבור מסכים בינוניים - 2 פריטים בשורה */
+  @media (max-width: 992px) {
+    .features-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* עבור מסכים קטנים - 1 פריט בשורה */
+  @media (max-width: 576px) {
+    .features-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* סגנון פריט בודד */
+  .feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    height: 100%;
+  }
+  
+  /* סגנון אייקון */
+  .feature-icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  /* צבעי רקע לאייקונים */
+  .icon-bg-primary {
+    background-color: rgba(13, 110, 253, 0.1);
+  }
+  
+  .icon-bg-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+  }
+  
+  .icon-bg-success {
+    background-color: rgba(25, 135, 84, 0.1);
+  }
+  
+  .icon-bg-info {
+    background-color: rgba(13, 202, 240, 0.1);
+  }
+  
+  /* סגנונות למצב דארק */
+  .dark .feature-item {
+    background-color: #2d2d2d;
+    color: #ffffff;
+  }
