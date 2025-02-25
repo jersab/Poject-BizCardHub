@@ -113,120 +113,153 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
         );
     }
 
-    // יצירת קישור למפת גוגל
-    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    // יצירת ה-URL למפת גוגל
+    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBQwdQMaA4QA9wPx4y7aMm7eSV9KOoFKyE&q=${encodeURIComponent(
         `${card.address.street}, ${card.address.city}, ${card.address.country}`
     )}`;
 
     return (
-        <div className="card-details-container">
-            <h2 className="card-details-title">{card.title}</h2>
-            
-            <div className="card-details-content">
-                {/* הצד השמאלי - כרטיס */}
-                <div className="card-details-bcard-container">
-                    <div className="card-details-bcard">
-                        <img className="card-details-bcard-image" src={card.image.url} alt={card.image.alt} />
-                        <div className="card-details-bcard-body">
-                            <h5 className="card-details-bcard-title">{card.title}</h5>
-                            <h6 className="card-details-bcard-subtitle">{card.subtitle}</h6>
-                            <p className="card-details-bcard-text">{card.description}</p>
+        <div className="card-details-page">
+            <div className="card-details-container">
+                {/* חלק עליון עם תמונה וכותרות */}
+                <div className="card-header-section">
+                    <img 
+                        src={card.image?.url || "https://via.placeholder.com/1200x400?text=No+Image+Available"} 
+                        alt={card.image?.alt || card.title} 
+                        className="header-bg-image" 
+                    />
+                    <div className="header-content">
+                        <h1 className="card-title">{card.title}</h1>
+                        <h2 className="card-subtitle">{card.subtitle}</h2>
+                    </div>
+                    {userId && (
+                        <button 
+                            className="card-like-button"
+                            onClick={handleLike}
+                            aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
+                        >
+                            <i className={`fa-${isLiked ? 'solid' : 'regular'} fa-heart`}></i>
+                        </button>
+                    )}
+                </div>
+                
+                {/* חלק אמצעי עם תיאור, פרטי קשר ומפה */}
+                <div className="card-main-content">
+                    {/* חלק שמאלי - תיאור ופרטי קשר */}
+                    <div className="card-info-section">
+                        <div className="card-description">
+                            {card.description}
                         </div>
-                        <ul className="card-details-bcard-list">
-                            <li><span>Phone:</span> <span>{card.phone}</span></li>
-                            <li><span>Address:</span> <span>{card.address.street}</span> <span>{card.address.city}</span></li>
-                            <li><span>Card Number:</span> <span>{card.bizNumber}</span></li>
-                            {card.createdAt && (
-                                <li><span>Created At:</span> <span>{new Date(card.createdAt).toLocaleDateString()}</span></li>
-                            )}
-                        </ul>
-                        <div className="card-details-bcard-footer">
-                            <div className="card-details-bcard-icons">
-                                <a href={`tel:${card.phone}`}>
+                        
+                        <div className="contact-info-section">
+                            <h3 className="section-title">Contact Information</h3>
+                            <div className="info-item">
+                                <div className="info-icon">
                                     <i className="fa-solid fa-phone"></i>
-                                </a>
-                                {card.email && (
-                                    <a href={`mailto:${card.email}`}>
-                                        <i className="fa-solid fa-envelope"></i>
-                                    </a>
-                                )}
-                                {card.wed && (
-                                    <a href={card.wed} target="_blank" rel="noopener noreferrer">
-                                        <i className="fa-solid fa-globe"></i>
-                                    </a>
-                                )}
+                                </div>
+                                <div className="info-content">
+                                    <strong>Phone:</strong><br />
+                                    <a href={`tel:${card.phone}`}>{card.phone}</a>
+                                </div>
                             </div>
-                            {userId && (
-                                <button 
-                                    className="card-details-like-button"
-                                    onClick={handleLike}
-                                    aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
-                                >
-                                    <i className={`fa-${isLiked ? 'solid' : 'regular'} fa-heart ${isLiked ? 'heart-liked' : ''}`}></i>
-                                </button>
+                            <div className="info-item">
+                                <div className="info-icon">
+                                    <i className="fa-solid fa-envelope"></i>
+                                </div>
+                                <div className="info-content">
+                                    <strong>Email:</strong><br />
+                                    <a href={`mailto:${card.email}`}>{card.email}</a>
+                                </div>
+                            </div>
+                            {card.wed && (
+                                <div className="info-item">
+                                    <div className="info-icon">
+                                        <i className="fa-solid fa-globe"></i>
+                                    </div>
+                                    <div className="info-content">
+                                        <strong>Website:</strong><br />
+                                        <a href={card.wed} target="_blank" rel="noopener noreferrer">{card.wed}</a>
+                                    </div>
+                                </div>
                             )}
+                        </div>
+                        
+                        <div className="business-details-section">
+                            <h3 className="section-title">Business Details</h3>
+                            <div className="info-item">
+                                <div className="info-icon">
+                                    <i className="fa-solid fa-id-card"></i>
+                                </div>
+                                <div className="info-content">
+                                    <strong>Business Number:</strong><br />
+                                    {card.bizNumber}
+                                </div>
+                            </div>
+                            <div className="info-item">
+                                <div className="info-icon">
+                                    <i className="fa-solid fa-calendar"></i>
+                                </div>
+                                <div className="info-content">
+                                    <strong>Created At:</strong><br />
+                                    {new Date(card.createdAt || Date.now()).toLocaleDateString()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {/* חלק ימני - מיקום ושיתוף */}
+                    <div>
+                        <div className="location-section">
+                            <div className="map-container">
+                                <iframe
+                                    title="Business Location"
+                                    src={mapUrl}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                            <div className="location-details">
+                                <h3 className="section-title">Location</h3>
+                                <div className="address-item">
+                                    <i className="fa-solid fa-map-marker-alt"></i>
+                                    {card.address.street}
+                                </div>
+                                <div className="address-item">
+                                    <i className="fa-solid fa-city"></i>
+                                    {card.address.city}, {card.address.state || ''} {card.address.zip}
+                                </div>
+                                <div className="address-item">
+                                    <i className="fa-solid fa-globe"></i>
+                                    {card.address.country}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="share-section mt-4">
+                            <h3 className="share-title">Share This Business</h3>
+                            <div className="share-buttons">
+                                <button className="share-button share-facebook">
+                                    <i className="fa-brands fa-facebook-f"></i>
+                                </button>
+                                <button className="share-button share-twitter">
+                                    <i className="fa-brands fa-twitter"></i>
+                                </button>
+                                <button className="share-button share-whatsapp">
+                                    <i className="fa-brands fa-whatsapp"></i>
+                                </button>
+                                <button className="share-button share-email">
+                                    <i className="fa-solid fa-envelope"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                {/* הצד הימני - מפה */}
-                <div className="card-details-map-container">
-                    <div className="card-details-map-card">
-                        <div className="card-details-map-header">
-                            <h3>
-                                <i className="fa-solid fa-location-dot"></i>
-                                Business Location
-                            </h3>
-                        </div>
-                        <div className="card-details-map-body">
-                            <div className="map-wrapper">
-                                {/* מפה סטטית של Google */}
-                                <img 
-                                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
-                                        `${card.address.street}, ${card.address.city}, ${card.address.country}`
-                                    )}&zoom=15&size=600x400&markers=color:red%7C${encodeURIComponent(
-                                        `${card.address.street}, ${card.address.city}, ${card.address.country}`
-                                    )}&key=AIzaSyDIJlZ5Nc-NPZ9Uy9BiXfhdUvkHsO-GJzg`} 
-                                    alt="Business Location Map"
-                                    className="map-image"
-                                    onError={(e) => {
-                                        // טיפול בשגיאת טעינת מפה
-                                        const target = e.target as HTMLImageElement;
-                                        target.onerror = null;
-                                        target.src = "https://via.placeholder.com/600x400?text=Map+not+available";
-                                    }}
-                                />
-                                <div className="map-overlay">
-                                    <a 
-                                        href={googleMapsUrl} 
-                                        className="map-button"
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                    >
-                                        <i className="fa-solid fa-external-link-alt"></i>
-                                        Open in Google Maps
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-details-map-footer">
-                            <h4>Address:</h4>
-                            <address>
-                                {card.address.street}<br />
-                                {card.address.city}, {card.address.state ? card.address.state + ', ' : ''}
-                                {card.address.zip}<br />
-                                {card.address.country}
-                            </address>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            {/* כפתור חזרה במרכז למטה */}
-            <div className="card-details-back-button-container">
+                {/* כפתור חזרה */}
                 <button 
                     onClick={() => navigate(-1)} 
-                    className="card-details-back-button"
+                    className="back-button"
                 >
                     <i className="fa-solid fa-arrow-left"></i>
                     Back

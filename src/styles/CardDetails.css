@@ -1,234 +1,391 @@
-/* CardDetails.css */
-.card-details-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 15px;
-}
+/* CardDetails.css - גישה מלאת מסך */
 
-.card-details-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    color: #333;
-}
-
-.card-details-content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-/* כרטיס בצד שמאל */
-.card-details-bcard-container {
-    flex: 1;
-    min-width: 45%;
-    order: 1; /* שינוי המיקום לצד שמאל */
-}
-
-.card-details-bcard {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-details-bcard-image {
+/* מיכל כללי שמתפרס לרוחב המסך */
+.card-details-page {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-details-bcard-body {
-    padding: 1rem;
-}
-
-.card-details-bcard-title {
-    margin-top: 0;
-    font-size: 1.5rem;
-}
-
-.card-details-bcard-subtitle {
-    color: #6c757d;
-    margin-bottom: 1rem;
-}
-
-.card-details-bcard-text {
-    margin-bottom: 0;
-}
-
-.card-details-bcard-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.card-details-bcard-list li {
-    padding: 0.75rem 1rem;
-    border-top: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-}
-
-.card-details-bcard-footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    border-top: 1px solid #ddd;
-}
-
-.card-details-bcard-icons a {
-    margin-right: 15px;
-    color: #6c757d;
-    text-decoration: none;
-}
-
-.card-details-bcard-icons a:hover {
-    color: #007bff;
-}
-
-.card-details-like-button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: #6c757d;
-}
-
-.heart-liked {
-    color: #dc3545;
-}
-
-/* מפה בצד ימין */
-.card-details-map-container {
-    flex: 1;
-    min-width: 45%;
-    order: 2; /* שינוי המיקום לצד ימין */
-}
-
-.card-details-map-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-details-map-header {
-    background-color: #007bff;
-    color: white;
-    padding: 1rem;
-}
-
-.card-details-map-header h3 {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-.card-details-map-header h3 i {
-    margin-right: 10px;
-}
-
-.card-details-map-body {
-    padding: 0;
-}
-
-.map-wrapper {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 30px 0;
+  }
+  
+  .card-details-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  /* חלק עליון עם תמונת רקע והכותרות */
+  .card-header-section {
     position: relative;
-    height: 400px;
-}
-
-.map-image {
+    height: 350px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-bg-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.map-overlay {
+    filter: brightness(0.7);
+  }
+  
+  .header-content {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.map-button {
-    background-color: white;
-    color: #333;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.map-button:hover {
-    background-color: #f8f9fa;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.map-button i {
-    margin-right: 8px;
-}
-
-.card-details-map-footer {
-    padding: 1rem;
-    border-top: 1px solid #eee;
-}
-
-.card-details-map-footer h4 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.card-details-map-footer address {
-    margin-bottom: 0;
-}
-
-/* כפתור חזרה במרכז למטה */
-.card-details-back-button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
+    bottom: 0;
+    left: 0;
     width: 100%;
-}
-
-.card-details-back-button {
-    background-color: #007bff;
+    padding: 30px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     color: white;
+  }
+  
+  .card-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  .card-subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .card-like-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
     border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.card-details-back-button:hover {
-    background-color: #0069d9;
-}
-
-/* רספונסיביות */
-@media (max-width: 768px) {
-    .card-details-content {
-        flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .card-like-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .card-like-button i {
+    font-size: 1.5rem;
+    color: #dc3545;
+  }
+  
+  /* חלק המידע העיקרי */
+  .card-main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  /* אזור התיאור והפרטים העיקריים */
+  .card-info-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-description {
+    padding: 25px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .contact-info-section,
+  .business-details-section {
+    padding: 25px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #007bff;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .info-icon {
+    min-width: 40px;
+    height: 40px;
+    background-color: #f0f8ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: #007bff;
+  }
+  
+  .info-content {
+    flex: 1;
+  }
+  
+  .info-content a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .info-content a:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  
+  /* אזור המיקום והמפה */
+  .location-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 300px;
+    border: none;
+  }
+  
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .location-details {
+    padding: 20px;
+  }
+  
+  .address-item {
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .address-item i {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px;
+    color: #007bff;
+  }
+  
+  /* אזור השיתוף */
+  .share-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .share-title {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .share-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .share-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .share-facebook {
+    background-color: #3b5998;
+  }
+  
+  .share-twitter {
+    background-color: #1da1f2;
+  }
+  
+  .share-whatsapp {
+    background-color: #25d366;
+  }
+  
+  .share-email {
+    background-color: #ea4335;
+  }
+  
+  /* כפתור חזרה */
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 20px;
+  }
+  
+  .back-button i {
+    margin-right: 10px;
+  }
+  
+  .back-button:hover {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+  }
+  
+  /* רספונסיביות */
+  @media (max-width: 992px) {
+    .card-main-content {
+      grid-template-columns: 1fr;
     }
     
-    .card-details-map-container,
-    .card-details-bcard-container {
-        width: 100%;
+    .card-header-section {
+      height: 300px;
     }
     
-    /* סדר צפייה במסכים קטנים */
-    .card-details-bcard-container {
-        order: 1;
+    .card-title {
+      font-size: 2rem;
     }
     
-    .card-details-map-container {
-        order: 2;
+    .card-subtitle {
+      font-size: 1.2rem;
     }
-}
+  }
+  
+  @media (max-width: 576px) {
+    .card-header-section {
+      height: 250px;
+    }
+    
+    .header-content {
+      padding: 20px;
+    }
+    
+    .card-title {
+      font-size: 1.8rem;
+    }
+    
+    .card-subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .card-description,
+    .contact-info-section,
+    .business-details-section,
+    .location-details {
+      padding: 15px;
+    }
+    
+    .section-title {
+      font-size: 1.2rem;
+    }
+    
+    .info-icon {
+      min-width: 30px;
+      height: 30px;
+    }
+  }
+  
+  /* מצב דארק */
+  .dark .card-details-page {
+    background-color: #1a1a1a;
+  }
+  
+  .dark .card-info-section,
+  .dark .location-section,
+  .dark .share-section {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dark .card-description,
+  .dark .section-title,
+  .dark .info-content,
+  .dark .address-item,
+  .dark .share-title {
+    color: #e0e0e0;
+  }
+  
+  .dark .info-icon {
+    background-color: #1a1a1a;
+    color: #3b9cff;
+  }
+  
+  .dark .info-content a {
+    color: #e0e0e0;
+  }
+  
+  .dark .info-content a:hover {
+    color: #3b9cff;
+  }
+  
+  .dark .section-title::after {
+    background-color: #3b9cff;
+  }
+  
+  .dark .contact-info-section,
+  .dark .business-details-section {
+    border-bottom: 1px solid #3d3d3d;
+  }
+  
+  .dark .back-button {
+    background-color: #2d2d2d;
+    border-color: #3d3d3d;
+    color: #e0e0e0;
+  }
+  
+  .dark .back-button:hover {
+    background-color: #3d3d3d;
+  }
+  
+  .dark .card-like-button {
+    background-color: #2d2d2d;
+  }
