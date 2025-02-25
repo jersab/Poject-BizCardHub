@@ -5,8 +5,7 @@ import { getCardById, likeCard } from "../services/cardsService";
 import { errorMassage, successMassage } from "../services/feedbackService";
 import { decodeToken } from "../services/tokenService";
 import { DecodedToken } from "../interfaces/auth/DecodedToken";
-import "../styles/CardDetails.css"; 
-
+import "../styles/cardDetails/MainContentAndInformation.css";
 interface CardDetailsProps {}
 
 const CardDetails: FunctionComponent<CardDetailsProps> = () => {
@@ -117,6 +116,9 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
     const mapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBQwdQMaA4QA9wPx4y7aMm7eSV9KOoFKyE&q=${encodeURIComponent(
         `${card.address.street}, ${card.address.city}, ${card.address.country}`
     )}`;
+
+    // יצירת URL לשיתוף
+    const shareUrl = window.location.href;
 
     return (
         <div className="card-details-page">
@@ -239,16 +241,28 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                         <div className="share-section mt-4">
                             <h3 className="share-title">Share This Business</h3>
                             <div className="share-buttons">
-                                <button className="share-button share-facebook">
+                                <button 
+                                    className="share-button share-facebook"
+                                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank')}
+                                >
                                     <i className="fa-brands fa-facebook-f"></i>
                                 </button>
-                                <button className="share-button share-twitter">
+                                <button 
+                                    className="share-button share-twitter"
+                                    onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`, '_blank')}
+                                >
                                     <i className="fa-brands fa-twitter"></i>
                                 </button>
-                                <button className="share-button share-whatsapp">
+                                <button 
+                                    className="share-button share-whatsapp"
+                                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(shareUrl)}`, '_blank')}
+                                >
                                     <i className="fa-brands fa-whatsapp"></i>
                                 </button>
-                                <button className="share-button share-email">
+                                <button 
+                                    className="share-button share-email"
+                                    onClick={() => window.open(`mailto:?subject=Check out this business&body=${encodeURIComponent(shareUrl)}`, '_self')}
+                                >
                                     <i className="fa-solid fa-envelope"></i>
                                 </button>
                             </div>

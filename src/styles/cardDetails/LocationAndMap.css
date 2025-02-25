@@ -1,0 +1,35 @@
+/* Location and Map */
+.location-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.map-container {
+  width: 100%;
+  height: 300px;
+  border: none;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.location-details {
+  padding: 20px;
+}
+
+.address-item {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.address-item i {
+  width: 20px;
+  text-align: center;
+  margin-right: 10px;
+  color: #007bff;
+}
