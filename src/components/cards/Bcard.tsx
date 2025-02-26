@@ -1,27 +1,31 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import { Card } from "../../interfaces/cards/Cards";
-import { likeCard } from "../../services/cardsService";
+import { likeCard, deleteCard } from "../../services/cardsService";
 import { errorMassage, successMassage } from "../../services/feedbackService";
 import { decodeToken } from "../../services/tokenService";
 import { DecodedToken } from "../../interfaces/auth/DecodedToken";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface BcardProps {
     card: Card;
     onLikeChange?: () => void;
+    onDelete?: () => void;
 }
  
-const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange }) => {
+const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) => {
     const [isLiked, setIsLiked] = useState<boolean>(false);
     const [userId, setUserId] = useState<string>("");
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    // בודק אם הכרטיס מסומן כמועדף
+    // בודק אם הכרטיס מסומן כמועדף ואם המשתמש הוא אדמין
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (token) {
             try {
                 const decodedToken = decodeToken(token) as DecodedToken;
                 setUserId(decodedToken._id);
+                setIsAdmin(decodedToken.isAdmin);
                 setIsLiked(card.likes?.includes(decodedToken._id) || false);
             } catch (error) {
                 console.error("Error decoding token:", error);
@@ -69,8 +73,48 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange }) => {
             });
     };
 
+    // פונקציית מחיקה עבור אדמינים
+    const handleDeleteCard = () => {
+        if (!card._id) return;
+        
+        if (window.confirm("האם אתה בטוח שברצונך למחוק כרטיס זה?")) {
+            deleteCard(card._id)
+                .then(() => {
+                    successMassage("הכרטיס נמחק בהצלחה");
+                    // קריאה לפונקצית האיפוס במידה וקיימת
+                    if (onDelete) onDelete();
+                    // רענון הדף במידה ולא סופקה פונקצית איפוס
+                    else navigate(0);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    errorMassage("שגיאה במחיקת הכרטיס");
+                });
+        }
+    };
+
     return ( 
         <div className="card m-2" style={{width: "18rem"}}>
+            {/* אייקון מחיקה למנהלים בפינה השמאלית העליונה */}
+            {isAdmin && (
+                <button
+                    className="btn btn-danger position-absolute"
+                    onClick={handleDeleteCard}
+                    aria-label="מחיקת כרטיס"
+                    title="מחיקת כרטיס"
+                    style={{
+                        top: "10px",
+                        right: "10px",
+                        padding: "5px 10px",
+                        borderRadius: "50%",
+                        zIndex: 10,
+                        boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
+                    }}
+                >
+                    <i className="fa-solid fa-trash"></i>
+                </button>
+            )}
+            
             <img className="card-img-top" src={card.image.url} alt={card.image.alt} />
             <div className="card-body">
                 <h5 className="card-title">{card.title}</h5>

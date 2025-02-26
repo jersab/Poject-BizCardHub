@@ -13,6 +13,7 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchFavorites = () => {
+        setIsLoading(true);
         const token = sessionStorage.getItem("token");
         if (!token) {
             setIsLoading(false);
@@ -29,12 +30,10 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
                 const favorites = res.data.filter((card: Card) => 
                     card.likes && card.likes.includes(userId)
                 );
-                console.log("Filtered favorites:", favorites);
                 setFavoriteCards(favorites);
                 setIsLoading(false);
             })
             .catch((err) => {
-                console.error(err);
                 errorMassage("Failed to load favorite cards");
                 setIsLoading(false);
             });
@@ -61,7 +60,12 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
                     ) : (
                         <div className="row">
                             {favoriteCards.map((card: Card) => (
-                                <Bcard key={card._id} card={card} onLikeChange={fetchFavorites} />
+                                <Bcard 
+                                    key={card._id} 
+                                    card={card} 
+                                    onLikeChange={fetchFavorites}
+                                    onDelete={fetchFavorites}
+                                />
                             ))}
                         </div>
                     )}

@@ -120,8 +120,6 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         navigate("/");
     };
 
-    console.log("Current user state:", user);
-
     return (
         <nav className={`navbar navbar-expand-lg ${theme === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}>
             <div className="container">
@@ -182,6 +180,9 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                             <span className="me-3">
                                 Welcome: {user.name?.first} {user.name?.last}
                             </span>
+                            <Link to="/edit-profile" className="btn btn-outline-primary me-3">
+                                <i className="fa-solid fa-user-pen me-1"></i> Profile
+                            </Link>
                             <button
                                 className="btn btn-outline-danger"
                                 onClick={handleLogout}

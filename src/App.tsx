@@ -16,6 +16,7 @@ import About from './components/About';
 import CardDetails from './components/CardDetails';
 import { ThemeMode, UserType } from './interfaces/ThemeMode';
 import Sandbox from './components/Sandbox';
+import EditProfile from './components/EditProfile';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -129,6 +130,12 @@ function App() {
                             <Route path="/sandbox" element={
                                 <ProtectedRoute requiredAdmin>
                                     <Sandbox />
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/edit-profile" element={
+                                <ProtectedRoute>
+                                    <EditProfile />
                                 </ProtectedRoute>
                             } />
                             

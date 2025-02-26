@@ -27,27 +27,40 @@ export function getAllUsers() {
         "x-auth-token": sessionStorage.getItem("token"),
       },
     });
-  }
+}
 
-  export function updateUserStatus(userId: string) {
-    return axios.patch(
-      `${API}/${userId}`, 
-      {}, // גוף בקשה ריק
-      {
-        headers: {
-          "x-auth-token": sessionStorage.getItem("token"),
-        },
-      }
-    );
-  }
-  
-  export function deleteUser(userId: string) {
-    return axios.delete(
-      `${API}/${userId}`, 
-      {
-        headers: {
-          "x-auth-token": sessionStorage.getItem("token"),
-        },
-      }
-    );
-  }
+// פונקציה חדשה לעדכון פרטי משתמש
+export function updateUser(userId: string, userData: Partial<User>) {
+  return axios.put(
+    `${API}/${userId}`,
+    userData,
+    {
+      headers: {
+        "x-auth-token": sessionStorage.getItem("token"),
+      },
+    }
+  );
+}
+
+export function updateUserStatus(userId: string) {
+  return axios.patch(
+    `${API}/${userId}`, 
+    {}, // גוף בקשה ריק
+    {
+      headers: {
+        "x-auth-token": sessionStorage.getItem("token"),
+      },
+    }
+  );
+}
+
+export function deleteUser(userId: string) {
+  return axios.delete(
+    `${API}/${userId}`, 
+    {
+      headers: {
+        "x-auth-token": sessionStorage.getItem("token"),
+      },
+    }
+  );
+}

@@ -17,6 +17,34 @@ const Cards: FunctionComponent<CardsProps> = () => {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
 
+    const fetchCards = () => {
+        setIsLoading(true);
+        // טעינת כל הכרטיסים
+        getAllCards().then((res) => {
+            setCards(res.data);
+            // אפשר לסנן כאן או לחכות ל-useEffect שמגיב לשינויים
+            if (searchQuery) {
+                const lowerCaseQuery = searchQuery.toLowerCase();
+                const filtered = res.data.filter((card: Card) => 
+                    card.title.toLowerCase().includes(lowerCaseQuery) ||
+                    card.subtitle.toLowerCase().includes(lowerCaseQuery) ||
+                    card.description.toLowerCase().includes(lowerCaseQuery) ||
+                    card.address.city.toLowerCase().includes(lowerCaseQuery) ||
+                    card.address.street.toLowerCase().includes(lowerCaseQuery)
+                );
+                setFilteredCards(filtered);
+            } else {
+                setFilteredCards(res.data);
+            }
+            setIsLoading(false);
+        }
+        ).catch((err) => {
+            console.log(err);
+            errorMassage("Failed to load cards");
+            setIsLoading(false);
+        });
+    };
+
     useEffect(() => {
         // בדיקה אם המשתמש הוא עסקי
         const userData = sessionStorage.getItem("user");
@@ -25,17 +53,7 @@ const Cards: FunctionComponent<CardsProps> = () => {
             setIsBusiness(user.isBusiness);
         }
 
-        // טעינת כל הכרטיסים
-        getAllCards().then((res) => {
-            setCards(res.data);
-            setFilteredCards(res.data);
-            setIsLoading(false);
-        }
-        ).catch((err) => {
-            console.log(err);
-            errorMassage("Failed to load cards");
-            setIsLoading(false);
-        });
+        fetchCards();
     }, []);
 
     // סינון כרטיסים לפי ערך החיפוש
@@ -69,7 +87,11 @@ const Cards: FunctionComponent<CardsProps> = () => {
         
         <div className="row">
             {filteredCards.map((card: Card) => (
-            <Bcard key={card._id} card={card} />
+            <Bcard 
+              key={card._id} 
+              card={card} 
+              onDelete={fetchCards} // העברת פונקציית רענון
+            />
             ))}
             
             {filteredCards.length === 0 && (
