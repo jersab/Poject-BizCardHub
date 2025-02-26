@@ -30,10 +30,12 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
                 const favorites = res.data.filter((card: Card) => 
                     card.likes && card.likes.includes(userId)
                 );
+                console.log("Filtered favorites:", favorites);
                 setFavoriteCards(favorites);
                 setIsLoading(false);
             })
             .catch((err) => {
+                console.error(err);
                 errorMassage("Failed to load favorite cards");
                 setIsLoading(false);
             });
@@ -64,7 +66,7 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
                                     key={card._id} 
                                     card={card} 
                                     onLikeChange={fetchFavorites}
-                                    onDelete={fetchFavorites}
+                                    onDelete={fetchFavorites} // תמיכה במחיקה
                                 />
                             ))}
                         </div>
