@@ -49,6 +49,11 @@ body.dark {
   color: #ffffff;
 }
 
+body.dark .footer-dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
 body.dark .card {
   background-color: #2d2d2d;
   border-color: #444;

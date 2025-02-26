@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Cards from './components/Cards';
 import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
 import Register from './components/Register';
@@ -13,7 +14,8 @@ import MyCards from './components/MyCards';
 import EditCard from './components/EditCard';
 import About from './components/About';
 import CardDetails from './components/CardDetails';
-import { ThemeMode } from './interfaces/ThemeMode';
+import { ThemeMode, UserType } from './interfaces/ThemeMode';
+import Sandbox from './components/Sandbox';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -27,15 +29,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requiredBusiness = false, 
   requiredAdmin = false 
 }) => {
-  // בדיקה אם המשתמש מחובר
   const token = sessionStorage.getItem("token");
   
-  // אם אין טוקן, חזור לדף התחברות
   if (!token) {
     return <Navigate to="/login" replace />;
   }
   
-  // אם נדרש סטטוס עסקי או אדמין, נבדוק את המשתמש
   if (requiredBusiness || requiredAdmin) {
     const userData = sessionStorage.getItem("user");
     if (!userData) {
@@ -44,23 +43,21 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     
     const user = JSON.parse(userData);
     
-    // אם נדרש סטטוס עסקי והמשתמש לא עסקי
     if (requiredBusiness && !user.isBusiness) {
       return <Navigate to="/" replace />;
     }
     
-    // אם נדרש סטטוס אדמין והמשתמש לא אדמין
     if (requiredAdmin && !user.isAdmin) {
       return <Navigate to="/" replace />;
     }
   }
   
-  // אם הכל תקין, נציג את הקומפוננטה
   return <>{children}</>;
 };
 
 function App() {
     const [theme, setTheme] = useState<ThemeMode>('light');
+    const [userType, setUserType] = useState<UserType>('guest');
 
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -68,34 +65,51 @@ function App() {
         document.body.className = newTheme;
     };
 
-    // עדכון ה-body בטעינה ראשונית
     useEffect(() => {
+        const token = sessionStorage.getItem("token");
+        const userData = sessionStorage.getItem("user");
+
+        if (token && userData) {
+            try {
+                const user = JSON.parse(userData);
+                if (user.isAdmin) {
+                    setUserType('admin');
+                } else if (user.isBusiness) {
+                    setUserType('business');
+                } else {
+                    setUserType('user');
+                }
+            } catch (error) {
+                console.error("Error parsing user data", error);
+                setUserType('guest');
+            }
+        } else {
+            setUserType('guest');
+        }
+
         document.body.className = theme;
     }, [theme]);
 
     return (
         <>
             <ToastContainer />
-            <div className="app-container">
+            <div className="app-container d-flex flex-column min-vh-100">
                 <Router>
                     <Header theme={theme} onThemeToggle={toggleTheme} />
-                    <div className="container mt-4">
+                    <div className="container mt-4 flex-grow-1">
                         <Routes>
-                            {/* Public Routes */}
                             <Route path="/" element={<Cards />} />
                             <Route path="/register" element={<Register />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/card-details/:id" element={<CardDetails />} />
                             
-                            {/* Protected Routes - User */}
                             <Route path="/fav-cards" element={
                                 <ProtectedRoute>
                                     <FavoriteCards />
                                 </ProtectedRoute>
                             } />
                             
-                            {/* Protected Routes - Business User */}
                             <Route path="/my-cards" element={
                                 <ProtectedRoute requiredBusiness>
                                     <MyCards />
@@ -112,10 +126,16 @@ function App() {
                                 </ProtectedRoute>
                             } />
                             
-                            {/* Fallback - 404 */}
+                            <Route path="/sandbox" element={
+                                <ProtectedRoute requiredAdmin>
+                                    <Sandbox />
+                                </ProtectedRoute>
+                            } />
+                            
                             <Route path="*" element={<h1 className="text-center mt-5">404 - Page Not Found</h1>} />
                         </Routes>
                     </div>
+                    <Footer userType={userType} />
                 </Router>
             </div>
         </>

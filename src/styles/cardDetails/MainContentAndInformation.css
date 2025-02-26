@@ -81,3 +81,67 @@
   color: #007bff;
   text-decoration: underline;
 }
+
+/* Dark mode styles */
+body.dark .card-details-page {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+body.dark .card-info-section,
+body.dark .location-section,
+body.dark .share-section {
+  background: #2d2d2d;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .card-description {
+  color: #eee;
+  border-bottom: 1px solid #444;
+}
+
+body.dark .contact-info-section,
+body.dark .business-details-section {
+  border-bottom: 1px solid #444;
+}
+
+body.dark .section-title {
+  color: #fff;
+}
+
+body.dark .address-item {
+  color: #fff;
+}
+body.dark .share-title {
+  color: #fff;
+}
+
+body.dark .info-icon {
+  background-color: #1e3a5f;
+  color: #4da3ff;
+}
+
+body.dark .info-content a {
+  color: #fff;
+}
+
+body.dark .info-content a:hover {
+  color: #4da3ff;
+}
+
+body.dark .back-button {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #fff;
+}
+
+body.dark .back-button:hover {
+  background-color: #3d3d3d;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .card-main-content {
+    grid-template-columns: 1fr;
+  }
+}

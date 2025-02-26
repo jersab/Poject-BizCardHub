@@ -20,3 +20,34 @@ export function getUserById(id: string){
         },        
     });
 }
+
+export function getAllUsers() {
+    return axios.get(API, {
+      headers: {
+        "x-auth-token": sessionStorage.getItem("token"),
+      },
+    });
+  }
+
+  export function updateUserStatus(userId: string) {
+    return axios.patch(
+      `${API}/${userId}`, 
+      {}, // גוף בקשה ריק
+      {
+        headers: {
+          "x-auth-token": sessionStorage.getItem("token"),
+        },
+      }
+    );
+  }
+  
+  export function deleteUser(userId: string) {
+    return axios.delete(
+      `${API}/${userId}`, 
+      {
+        headers: {
+          "x-auth-token": sessionStorage.getItem("token"),
+        },
+      }
+    );
+  }

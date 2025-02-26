@@ -180,7 +180,7 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                     {user ? (
                         <div className="d-flex align-items-center">
                             <span className="me-3">
-                                Welcome {user.name?.first} {user.name?.last}
+                                Welcome: {user.name?.first} {user.name?.last}
                             </span>
                             <button
                                 className="btn btn-outline-danger"

@@ -223,6 +223,12 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                             </div>
                             <div className="location-details">
                                 <h3 className="section-title">Location</h3>
+                                <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${card.address.street}, ${card.address.city}, ${card.address.country}`)}`} 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   className="btn btn-primary mb-3">
+                                    📍 פתח בגוגל מפות
+                                </a>
                                 <div className="address-item">
                                     <i className="fa-solid fa-map-marker-alt"></i>
                                     {card.address.street}
