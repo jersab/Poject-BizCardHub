@@ -16,6 +16,7 @@ interface HeaderProps {
 const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
     const [user, setUser] = useState<User | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [navbarExpanded, setNavbarExpanded] = useState<boolean>(false);
     const navigate = useNavigate();
     
     const navItems: NavItem[] = [
@@ -92,29 +93,50 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         
         window.addEventListener('storage', handleStorageChange);
         
-        // טעינת סקריפט Bootstrap עבור תפריט המבורגר
-        const loadBootstrapJS = () => {
-            const scriptExists = document.getElementById('bootstrap-js');
-            if (!scriptExists) {
-                const script = document.createElement('script');
-                script.id = 'bootstrap-js';
-                script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';
-                script.integrity = 'sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz';
-                script.crossOrigin = 'anonymous';
-                document.body.appendChild(script);
+        // קריסת תפריט כאשר המסך משנה גודל
+        const handleResize = () => {
+            if (window.innerWidth > 768 && navbarExpanded) {
+                // כאשר המסך גדל, סגור את התפריט הנפתח
+                setNavbarExpanded(false);
+                
+                // סגור את התפריט גם בצד ה-DOM אם קיים אלמנט פתוח
+                const navbarToggler = document.querySelector('.navbar-toggler') as HTMLElement;
+                if (navbarToggler && !navbarToggler.classList.contains('collapsed')) {
+                    navbarToggler.click();
+                }
             }
         };
         
-        loadBootstrapJS();
+        window.addEventListener('resize', handleResize);
         
         return () => {
             window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [navbarExpanded]);
+
+    // טיפול בשינוי מצב תפריט המבורגר
+    const handleNavbarToggle = () => {
+        setNavbarExpanded(!navbarExpanded);
+    };
+
+    // סגירת התפריט בעת ניווט
+    const handleNavigation = () => {
+        if (navbarExpanded) {
+            setNavbarExpanded(false);
+            // אם התפריט פתוח, סגור אותו ידנית
+            const navbarToggler = document.querySelector('.navbar-toggler') as HTMLElement;
+            const navbarCollapse = document.querySelector('.navbar-collapse') as HTMLElement;
+            if (navbarToggler && navbarCollapse && navbarCollapse.classList.contains('show')) {
+                navbarToggler.click();
+            }
+        }
+    };
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         navigate(`/?search=${encodeURIComponent(searchQuery.trim())}`);
+        handleNavigation(); // סגור את התפריט אחרי חיפוש
     };
 
     // חיפוש בזמן אמת - מתעדכן עם כל שינוי בשדה החיפוש
@@ -133,6 +155,7 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         sessionStorage.removeItem("user");
         setUser(null);
         navigate("/");
+        handleNavigation(); // סגור את התפריט אחרי התנתקות
     };
 
     // בדיקה אם יש תמונת משתמש תקפה
@@ -154,20 +177,21 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                     data-bs-toggle="collapse" 
                     data-bs-target="#navbarContent"
                     aria-controls="navbarContent"
-                    aria-expanded="false"
+                    aria-expanded={navbarExpanded ? "true" : "false"}
                     aria-label="Toggle navigation"
+                    onClick={handleNavbarToggle}
                 >
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarContent">
+                <div className={`collapse navbar-collapse ${navbarExpanded ? 'show' : ''}`} id="navbarContent">
                     <ul className="navbar-nav me-auto">
                         {navItems.map((item) => (
                             <li key={item.path} className="nav-item">
                                 {(!item.requireAuth || user) &&
                                  (!item.requireBusiness || user?.isBusiness) &&
                                  (!item.requireAdmin || user?.isAdmin) && (
-                                    <Link className="nav-link" to={item.path}>
+                                    <Link className="nav-link" to={item.path} onClick={handleNavigation}>
                                         {item.label}
                                     </Link>
                                 )}
@@ -234,7 +258,7 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                                     {user.name?.first} {user.name?.last}
                                 </span>
                             </div>
-                            <Link to="/edit-profile" className="btn btn-outline-primary me-3">
+                            <Link to="/edit-profile" className="btn btn-outline-primary me-3" onClick={handleNavigation}>
                                 <i className="fa-solid fa-user-pen me-1"></i> Profile
                             </Link>
                             <button
@@ -253,10 +277,10 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                             >
                                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                             </button>
-                            <Link to="/login" className="btn btn-outline-primary me-2">
+                            <Link to="/login" className="btn btn-outline-primary me-2" onClick={handleNavigation}>
                                 Login
                             </Link>
-                            <Link to="/register" className="btn btn-primary">
+                            <Link to="/register" className="btn btn-primary" onClick={handleNavigation}>
                                 Sign Up
                             </Link>
                         </div>

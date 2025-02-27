@@ -93,8 +93,9 @@ body.light {
   color: #000000;
 }
 
-/* Responsive */
+/* Mobile-specific styling */
 @media (max-width: 768px) {
+  /* Card styling on mobile */
   .card {
     width: 100%;
   }
@@ -102,5 +103,38 @@ body.light {
   .row {
     gap: 10px;
   }
-}
 
+  .navbar .input-group {
+    margin-bottom: 15px;
+  }
+
+  
+  
+  /* Fix for profile buttons in mobile view */
+  .navbar .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Specifically target the profile button to make it smaller */
+  .navbar .btn-outline-primary,
+  .navbar .btn-outline-danger,
+  .navbar .btn-primary {
+    width: auto;
+    white-space: nowrap;
+  }
+  
+  /* Make the buttons row wrap properly on small screens */
+  .navbar .d-flex.align-items-center {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  /* Adjust the profile icon size */
+  .navbar .rounded-circle {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 14px !important;
+  }
+}
