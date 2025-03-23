@@ -26,7 +26,6 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         { path: "/sandbox", label: "Sandbox", requireAdmin: true },
     ];
 
-    // בדיקת סטטוס התחברות בכל רינדור וטעינה מחדש של הדף
     useEffect(() => {
         console.log("Header useEffect running");
         
@@ -40,7 +39,6 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
             if (token) {
                 if (savedUser) {
                     try {
-                        // נסה לפרסר את המידע השמור
                         const parsedUser = JSON.parse(savedUser);
                         console.log("Parsed user:", parsedUser);
                         setUser(parsedUser);
@@ -50,11 +48,9 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                         fetchUserData(token);
                     }
                 } else {
-                    // אם אין מידע שמור, הבא מהשרת
                     fetchUserData(token);
                 }
             } else {
-                // אם אין טוקן, נקה את המשתמש
                 setUser(null);
                 sessionStorage.removeItem("user");
             }
@@ -85,21 +81,14 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         };
         
         checkUserStatus();
-        
-        // בדיקת שינויים ב-sessionStorage
         const handleStorageChange = () => {
             checkUserStatus();
         };
         
         window.addEventListener('storage', handleStorageChange);
-        
-        // קריסת תפריט כאשר המסך משנה גודל
         const handleResize = () => {
             if (window.innerWidth > 768 && navbarExpanded) {
-                // כאשר המסך גדל, סגור את התפריט הנפתח
                 setNavbarExpanded(false);
-                
-                // סגור את התפריט גם בצד ה-DOM אם קיים אלמנט פתוח
                 const navbarToggler = document.querySelector('.navbar-toggler') as HTMLElement;
                 if (navbarToggler && !navbarToggler.classList.contains('collapsed')) {
                     navbarToggler.click();
@@ -115,16 +104,13 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         };
     }, [navbarExpanded]);
 
-    // טיפול בשינוי מצב תפריט המבורגר
     const handleNavbarToggle = () => {
         setNavbarExpanded(!navbarExpanded);
     };
 
-    // סגירת התפריט בעת ניווט
     const handleNavigation = () => {
         if (navbarExpanded) {
             setNavbarExpanded(false);
-            // אם התפריט פתוח, סגור אותו ידנית
             const navbarToggler = document.querySelector('.navbar-toggler') as HTMLElement;
             const navbarCollapse = document.querySelector('.navbar-collapse') as HTMLElement;
             if (navbarToggler && navbarCollapse && navbarCollapse.classList.contains('show')) {
@@ -136,15 +122,13 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         navigate(`/?search=${encodeURIComponent(searchQuery.trim())}`);
-        handleNavigation(); // סגור את התפריט אחרי חיפוש
+        handleNavigation(); 
     };
 
-    // חיפוש בזמן אמת - מתעדכן עם כל שינוי בשדה החיפוש
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSearchQuery(value);
         
-        // עדכון ה-URL ללא טעינה מחדש של הדף
         if (window.location.pathname === '/') {
             navigate(`/?search=${encodeURIComponent(value)}`, { replace: true });
         }
@@ -155,13 +139,11 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
         sessionStorage.removeItem("user");
         setUser(null);
         navigate("/");
-        handleNavigation(); // סגור את התפריט אחרי התנתקות
+        handleNavigation(); 
     };
 
-    // בדיקה אם יש תמונת משתמש תקפה
     const hasValidImage = user?.image && user.image.url && user.image.url.trim().length > 0;
 
-    // הצגת האות הראשונה של השם אם אין תמונה
     const userInitial = user?.name?.first?.charAt(0).toUpperCase() || "U";
 
     return (
@@ -232,7 +214,6 @@ const Header: FunctionComponent<HeaderProps> = ({ theme, onThemeToggle }) => {
                                         className="rounded-circle me-2" 
                                         style={{ width: '35px', height: '35px', objectFit: 'cover' }} 
                                         onError={(e) => {
-                                            // אם תמונה נכשלת בטעינה, החלף אותה לאלמנט div עם האות הראשונה
                                             e.currentTarget.style.display = 'none';
                                             const parent = e.currentTarget.parentElement;
                                             if (parent) {

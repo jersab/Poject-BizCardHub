@@ -23,7 +23,6 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
                 errorMassage("Failed to load your cards");
                 setIsLoading(false);
                 
-                // אם יש שגיאת הרשאות, ננווט לדף הבית
                 if (err.response && err.response.status === 403) {
                     navigate("/");
                 }
@@ -39,7 +38,6 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
             deleteCard(cardId)
                 .then(() => {
                     successMassage("Card deleted successfully");
-                    // עדכון הרשימה
                     setCards(cards.filter(card => card._id !== cardId));
                 })
                 .catch((err) => {
@@ -53,7 +51,6 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
         navigate(`/edit-card/${cardId}`);
     };
 
-    // רינדור כרטיסים בדף
     return (
         <>
             <div className="container mt-4 position-relative" style={{ minHeight: "80vh" }}>
@@ -106,7 +103,6 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
                     </div>
                 )}
                 
-                {/* כפתור הוספת כרטיס חדש בפינה הימנית התחתונה */}
                 <Link 
                     to="/new-card" 
                     className="btn btn-success position-fixed" 

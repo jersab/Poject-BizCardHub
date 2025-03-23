@@ -18,7 +18,6 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    // בודק אם הכרטיס מסומן כמועדף ואם המשתמש הוא אדמין
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (token) {
@@ -40,15 +39,12 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
             return;
         }
 
-        // עדכון מצב הלייק מראש לחוויית משתמש טובה יותר
         const newLikedState = !isLiked;
         setIsLiked(newLikedState);
 
         likeCard(card._id as string)
             .then(() => {
-                // במקרה של הצלחה, עדכן את מערך הלייקים של הכרטיס
                 if (newLikedState) {
-                    // הוספת לייק - צריך להוסיף את ה-userId למערך
                     if (!card.likes) {
                         card.likes = [];
                     }
@@ -56,7 +52,6 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
                         card.likes.push(userId);
                     }
                 } else {
-                    // הסרת לייק - צריך להסיר את ה-userId מהמערך
                     if (card.likes) {
                         card.likes = card.likes.filter(id => id !== userId);
                     }
@@ -66,14 +61,12 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
                 if (onLikeChange) onLikeChange();
             })
             .catch((err) => {
-                // במקרה של כישלון - החזר את המצב הקודם
                 setIsLiked(!newLikedState);
                 console.error(err);
                 errorMassage("Failed to update favorite status");
             });
     };
 
-    // פונקציית מחיקה עבור אדמינים
     const handleDeleteCard = () => {
         if (!card._id) return;
         
@@ -81,9 +74,7 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
             deleteCard(card._id)
                 .then(() => {
                     successMassage("הכרטיס נמחק בהצלחה");
-                    // קריאה לפונקצית האיפוס במידה וקיימת
                     if (onDelete) onDelete();
-                    // רענון הדף במידה ולא סופקה פונקצית איפוס
                     else navigate(0);
                 })
                 .catch((err) => {
@@ -95,7 +86,6 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
 
     return ( 
         <div className="card m-2" style={{width: "18rem"}}>
-            {/* אייקון מחיקה למנהלים בפינה השמאלית העליונה */}
             {isAdmin && (
                 <button
                     className="btn btn-danger position-absolute"
@@ -131,7 +121,6 @@ const Bcard: FunctionComponent<BcardProps> = ({ card, onLikeChange, onDelete }) 
                     <a href={`tel: ${card.phone}`} className="card-link me-2">
                         <i className="fa-solid fa-phone"></i>
                     </a>
-                    {/* כפתור מעבר לדף פרטים מלאים */}
                     <Link to={`/card-details/${card._id}`} className="card-link">
                         <i className="fa-solid fa-circle-info"></i>
                     </Link>

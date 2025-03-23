@@ -59,7 +59,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
       .then((res) => {
         console.log(res);
         successMassage(`${res.data.email} registered successfully`);
-        navigate("/login"); // ניווט אוטומטי לדף הלוגין
+        navigate("/login"); 
       })
       .catch((err) => {
         console.log(err);

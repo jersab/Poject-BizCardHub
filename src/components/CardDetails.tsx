@@ -22,7 +22,6 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
             return;
         }
 
-        // בדיקת פרטי המשתמש המחובר
         const token = sessionStorage.getItem("token");
         if (token) {
             try {
@@ -33,12 +32,10 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
             }
         }
 
-        // טעינת פרטי הכרטיס
         getCardById(id)
             .then((res) => {
                 setCard(res.data);
                 
-                // בדיקה אם הכרטיס מסומן כמועדף
                 if (token) {
                     const decodedToken = decodeToken(token) as DecodedToken;
                     setIsLiked(res.data.likes?.includes(decodedToken._id) || false);
@@ -62,15 +59,12 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
             return;
         }
 
-        // עדכון מצב הלייק מראש לחוויית משתמש טובה יותר
         const newLikedState = !isLiked;
         setIsLiked(newLikedState);
 
         likeCard(card._id)
             .then(() => {
-                // במקרה של הצלחה, עדכן את מערך הלייקים של הכרטיס
                 if (newLikedState) {
-                    // הוספת לייק - צריך להוסיף את ה-userId למערך
                     if (!card.likes) {
                         card.likes = [];
                     }
@@ -78,7 +72,6 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                         card.likes.push(userId);
                     }
                 } else {
-                    // הסרת לייק - צריך להסיר את ה-userId מהמערך
                     if (card.likes) {
                         card.likes = card.likes.filter(id => id !== userId);
                     }
@@ -87,7 +80,6 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                 successMassage(newLikedState ? "Added to favorites" : "Removed from favorites");
             })
             .catch((err) => {
-                // במקרה של כישלון - החזר את המצב הקודם
                 setIsLiked(!newLikedState);
                 console.error(err);
                 errorMassage("Failed to update favorite status");
@@ -112,18 +104,15 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
         );
     }
 
-    // יצירת ה-URL למפת גוגל
     const mapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBQwdQMaA4QA9wPx4y7aMm7eSV9KOoFKyE&q=${encodeURIComponent(
         `${card.address.street}, ${card.address.city}, ${card.address.country}`
     )}`;
 
-    // יצירת URL לשיתוף
     const shareUrl = window.location.href;
 
     return (
         <div className="card-details-page">
             <div className="card-details-container">
-                {/* חלק עליון עם תמונה וכותרות */}
                 <div className="card-header-section">
                     <img 
                         src={card.image?.url || "https://via.placeholder.com/1200x400?text=No+Image+Available"} 
@@ -144,15 +133,11 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                         </button>
                     )}
                 </div>
-                
-                {/* חלק אמצעי עם תיאור, פרטי קשר ומפה */}
                 <div className="card-main-content">
-                    {/* חלק שמאלי - תיאור ופרטי קשר */}
                     <div className="card-info-section">
                         <div className="card-description">
                             {card.description}
-                        </div>
-                        
+                        </div>   
                         <div className="contact-info-section">
                             <h3 className="section-title">Contact Information</h3>
                             <div className="info-item">
@@ -185,7 +170,6 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                                 </div>
                             )}
                         </div>
-                        
                         <div className="business-details-section">
                             <h3 className="section-title">Business Details</h3>
                             <div className="info-item">
@@ -208,8 +192,6 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                             </div>
                         </div>
                     </div>
-                    
-                    {/* חלק ימני - מיקום ושיתוף */}
                     <div>
                         <div className="location-section">
                             <div className="map-container">
@@ -275,8 +257,6 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
                         </div>
                     </div>
                 </div>
-                
-                {/* כפתור חזרה */}
                 <button 
                     onClick={() => navigate(-1)} 
                     className="back-button"

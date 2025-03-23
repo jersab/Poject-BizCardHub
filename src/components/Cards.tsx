@@ -19,10 +19,8 @@ const Cards: FunctionComponent<CardsProps> = () => {
 
     const fetchCards = () => {
         setIsLoading(true);
-        // טעינת כל הכרטיסים
         getAllCards().then((res) => {
             setCards(res.data);
-            // אפשר לסנן כאן או לחכות ל-useEffect שמגיב לשינויים
             if (searchQuery) {
                 const lowerCaseQuery = searchQuery.toLowerCase();
                 const filtered = res.data.filter((card: Card) => 
@@ -46,17 +44,15 @@ const Cards: FunctionComponent<CardsProps> = () => {
     };
 
     useEffect(() => {
-        // בדיקה אם המשתמש הוא עסקי
         const userData = sessionStorage.getItem("user");
         if (userData) {
             const user = JSON.parse(userData);
             setIsBusiness(user.isBusiness);
         }
-
         fetchCards();
     }, []);
 
-    // סינון כרטיסים לפי ערך החיפוש
+
     useEffect(() => {
         if (searchQuery) {
             const lowerCaseQuery = searchQuery.toLowerCase();
@@ -90,7 +86,7 @@ const Cards: FunctionComponent<CardsProps> = () => {
             <Bcard 
               key={card._id} 
               card={card} 
-              onDelete={fetchCards} // העברת פונקציית רענון
+              onDelete={fetchCards} 
             />
             ))}
             
@@ -100,8 +96,6 @@ const Cards: FunctionComponent<CardsProps> = () => {
               </div>
             )}
         </div>
-        
-        {/* כפתור הוספת כרטיס חדש - מופיע רק למשתמשים עסקיים */}
         {isBusiness && (
             <Link 
                 to="/new-card" 

@@ -50,13 +50,13 @@
 }
 
 .card-title {
-  font-size: 1.3rem;  /* הגדל את הכותרת הראשית */
-  font-weight: 600;   /* הוסף משקל גופן כבד יותר */
+  font-size: 1.3rem;
+  font-weight: 600;   
 }
 
 .card-subtitle {
-  font-size: 1.2rem;  /* הקטן את הכותרת המשנית */
-  font-weight: 400;     /* צבע אפור מעט יותר בהיר */
+  font-size: 1.2rem;  
+  font-weight: 400;    
 }
 
 .info-item {
@@ -92,7 +92,6 @@
   text-decoration: underline;
 }
 
-/* Dark mode styles */
 body.dark .card-details-page {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -149,7 +148,6 @@ body.dark .back-button:hover {
   background-color: #3d3d3d;
 }
 
-/* Media queries for responsive design */
 @media (max-width: 768px) {
   .card-main-content {
     grid-template-columns: 1fr;

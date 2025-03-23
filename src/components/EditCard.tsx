@@ -77,8 +77,6 @@ const EditCard: FunctionComponent<EditCardProps> = () => {
     getCardById(id)
       .then((res) => {
         const card: Card = res.data;
-        
-        // התאמת הנתונים לפורמט של הטופס
         formik.setValues({
           title: card.title || "",
           subtitle: card.subtitle || "",

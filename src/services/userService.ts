@@ -29,7 +29,6 @@ export function getAllUsers() {
     });
 }
 
-// פונקציה חדשה לעדכון פרטי משתמש
 export function updateUser(userId: string, userData: Partial<User>) {
   return axios.put(
     `${API}/${userId}`,
@@ -45,7 +44,7 @@ export function updateUser(userId: string, userData: Partial<User>) {
 export function updateUserStatus(userId: string) {
   return axios.patch(
     `${API}/${userId}`, 
-    {}, // גוף בקשה ריק
+    {},
     {
       headers: {
         "x-auth-token": sessionStorage.getItem("token"),

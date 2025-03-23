@@ -1,13 +1,9 @@
-/* סגנונות מיוחדים לדף האודות */
-
-/* הגדרות לקונטיינר הראשי */
 .about-container {
     width: 100%;
     max-width: 100%;
     padding: 0;
   }
   
-  /* סידור 4 פריטים בשורה */
   .features-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -15,21 +11,18 @@
     margin-bottom: 2rem;
   }
   
-  /* עבור מסכים בינוניים - 2 פריטים בשורה */
   @media (max-width: 992px) {
     .features-row {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   
-  /* עבור מסכים קטנים - 1 פריט בשורה */
   @media (max-width: 576px) {
     .features-row {
       grid-template-columns: 1fr;
     }
   }
   
-  /* סגנון פריט בודד */
   .feature-item {
     display: flex;
     flex-direction: column;
@@ -42,7 +35,6 @@
     height: 100%;
   }
   
-  /* סגנון אייקון */
   .feature-icon {
     width: 70px;
     height: 70px;
@@ -53,7 +45,6 @@
     margin-bottom: 1rem;
   }
   
-  /* צבעי רקע לאייקונים */
   .icon-bg-primary {
     background-color: rgba(13, 110, 253, 0.1);
   }
@@ -70,7 +61,6 @@
     background-color: rgba(13, 202, 240, 0.1);
   }
   
-  /* סגנונות למצב דארק */
   .dark .feature-item {
     background-color: #2d2d2d;
     color: #ffffff;

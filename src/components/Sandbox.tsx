@@ -29,7 +29,7 @@ const Sandbox: React.FC = () => {
             updateUserStatus(user._id)
                 .then(() => {
                     successMassage("User status updated");
-                    fetchUsers(); // רענון רשימת המשתמשים
+                    fetchUsers(); 
                 })
                 .catch((err) => {
                     console.error(err);
@@ -43,7 +43,7 @@ const Sandbox: React.FC = () => {
             deleteUser(userId)
                 .then(() => {
                     successMassage("User deleted");
-                    fetchUsers(); // רענון רשימת המשתמשים
+                    fetchUsers(); 
                 })
                 .catch((err) => {
                     console.error(err);
@@ -78,14 +78,14 @@ const Sandbox: React.FC = () => {
                                 <button 
                                     className="btn btn-sm btn-warning me-2"
                                     onClick={() => handleUserStatusChange(user)}
-                                    disabled={user.isAdmin} // מנע שינוי סטטוס ממשתמש אדמין
+                                    disabled={user.isAdmin} 
                                 >
                                     Toggle Status
                                 </button>
                                 <button 
                                     className="btn btn-sm btn-danger"
                                     onClick={() => user._id && handleUserDelete(user._id)}
-                                    disabled={user.isAdmin} // מנע מחיקת אדמין
+                                    disabled={user.isAdmin} 
                                 >
                                     Delete
                                 </button>

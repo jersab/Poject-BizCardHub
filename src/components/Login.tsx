@@ -34,30 +34,24 @@ const Login: FunctionComponent<LoginProps> = () => {
         .then((res) => {
           const token = res.data;
           if (typeof token === "string" && token.trim()) {
-            // שמירת הטוקן
             sessionStorage.setItem("token", token);
             
-            // פענוח הטוקן והדפסה לבדיקה
             const decodedToken = decodeToken(token) as DecodedToken;
             console.log("Decoded token:", decodedToken);
             
-            // קבלת פרטי המשתמש מהשרת
             getUserById(decodedToken._id)
               .then((userRes) => {
                 const userData = userRes.data;
                 console.log("User data from server:", userData);
                 
-                // שמירת פרטי המשתמש
                 sessionStorage.setItem("user", JSON.stringify(userData));
                 
-                // בדיקה שהנתונים נשמרו
                 const savedUser = sessionStorage.getItem("user");
                 console.log("Saved user in sessionStorage:", savedUser);
                 
                 successMassage(`${values.email} logged in successfully`);
                 
-                // מעבר לדף הבית
-                window.location.href = "/";  // שימוש בניווט מלא במקום navigate
+                window.location.href = "/";
               })
               .catch((err) => {
                 console.error("Error fetching user data:", err);

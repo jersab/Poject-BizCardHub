@@ -18,8 +18,6 @@ import { ThemeMode, UserType } from './interfaces/ThemeMode';
 import Sandbox from './components/Sandbox';
 import EditProfile from './components/EditProfile';
 
-
-// Protected Route Component
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredBusiness?: boolean;

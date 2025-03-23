@@ -19,14 +19,11 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
             setIsLoading(false);
             return;
         }
-
-        // קבל את מזהה המשתמש מהטוקן
         const decodedToken = decodeToken(token) as DecodedToken;
         const userId = decodedToken._id;
 
         getAllCards()
             .then((res) => {
-                // סנן רק את הכרטיסים שהמשתמש סימן כמועדפים
                 const favorites = res.data.filter((card: Card) => 
                     card.likes && card.likes.includes(userId)
                 );
@@ -66,7 +63,7 @@ const FavoriteCards: FunctionComponent<FavoriteCardsProps> = () => {
                                     key={card._id} 
                                     card={card} 
                                     onLikeChange={fetchFavorites}
-                                    onDelete={fetchFavorites} // תמיכה במחיקה
+                                    onDelete={fetchFavorites} 
                                 />
                             ))}
                         </div>

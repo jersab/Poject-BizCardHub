@@ -57,12 +57,8 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
       updateUser(user._id, normalizedUser)
         .then(() => {
           successMassage("פרטי המשתמש עודכנו בהצלחה");
-          
-          // עדכון פרטי המשתמש ב-sessionStorage
           const updatedUser = { ...user, ...normalizedUser };
           sessionStorage.setItem("user", JSON.stringify(updatedUser));
-          
-          // רענון העמוד כדי שהשינויים יופיעו בתפריט
           window.location.href = "/";
         })
         .catch((err) => {
@@ -89,7 +85,6 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
           const userData = res.data;
           setUser(userData);
           
-          // מילוי הפורם עם נתוני המשתמש הקיימים
           formik.setValues({
             first: userData.name?.first || "",
             middle: userData.name?.middle || "",
@@ -133,7 +128,6 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
       <div className="w-75 mx-auto">
         <h2 className="display-2 text-center my-4">עריכת פרטי משתמש</h2>
         <form className="mt-4" onSubmit={formik.handleSubmit}>
-          {/* שורה ראשונה - פרטים אישיים */}
           <div className="row g-3">
             <div className="col-md">
               <div className="form-floating mb-3">
@@ -192,8 +186,6 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
               </div>
             </div>
           </div>
-
-          {/* שורה שנייה - טלפון ותמונה */}
           <div className="row g-3">
             <div className="col-md">
               <div className="form-floating mb-3">
@@ -251,8 +243,6 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
               </div>
             </div>
           </div>
-
-          {/* שורה שלישית - כתובת */}
           <div className="row g-3">
             <div className="col-md">
               <div className="form-floating mb-3">
@@ -311,8 +301,6 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
               </div>
             </div>
           </div>
-
-          {/* שורה רביעית - רחוב, מספר בית, מיקוד */}
           <div className="row g-3">
             <div className="col-md-6">
               <div className="form-floating mb-3">
@@ -372,8 +360,6 @@ const EditProfile: FunctionComponent<EditProfileProps> = () => {
               </div>
             </div>
           </div>
-
-          {/* כפתורי שליחה וביטול */}
           <div className="text-center mt-4">
             <button
               type="submit"

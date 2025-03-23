@@ -3,7 +3,6 @@
   margin: 0 auto;
 }
 
-/* סגנונות בסיסיים */
 .app-container {
   min-height: 100vh;
   transition: background-color 0.3s, color 0.3s;
@@ -43,7 +42,6 @@
   text-align: end;
 }
 
-/* Dark Mode */
 body.dark {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -87,15 +85,12 @@ body.dark .btn-outline-primary {
   border-color: #007bff;
 }
 
-/* Light Mode */
 body.light {
   background-color: #ffffff;
   color: #000000;
 }
 
-/* Mobile-specific styling */
 @media (max-width: 768px) {
-  /* Card styling on mobile */
   .card {
     width: 100%;
   }
@@ -108,30 +103,24 @@ body.light {
     margin-bottom: 15px;
   }
 
-  
-  
-  /* Fix for profile buttons in mobile view */
   .navbar .btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
   }
   
-  /* Specifically target the profile button to make it smaller */
   .navbar .btn-outline-primary,
   .navbar .btn-outline-danger,
   .navbar .btn-primary {
     width: auto;
     white-space: nowrap;
   }
-  
-  /* Make the buttons row wrap properly on small screens */
+   */
   .navbar .d-flex.align-items-center {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
   }
   
-  /* Adjust the profile icon size */
   .navbar .rounded-circle {
     width: 30px !important;
     height: 30px !important;

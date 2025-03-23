@@ -1,5 +1,5 @@
 import { FC } from "react";
-import "../styles/About.css"; // ייבוא קובץ ה-CSS הייעודי
+import "../styles/About.css"; 
 
 interface AboutProps {}
 
@@ -21,8 +21,6 @@ const About: FC<AboutProps> = () => {
             <hr className="my-5" />
 
             <h3 className="h4 mb-4 text-center">What you can do on BCard:</h3>
-            
-            {/* שימוש במערכת גריד CSS מותאמת אישית */}
             <div className="features-row">
               {features.map(({ icon, title, description, bgColor }, index) => (
                 <div key={index} className="feature-item">
