@@ -49,6 +49,16 @@
   background-color: #007bff;
 }
 
+.card-title {
+  font-size: 1.3rem;  /* הגדל את הכותרת הראשית */
+  font-weight: 600;   /* הוסף משקל גופן כבד יותר */
+}
+
+.card-subtitle {
+  font-size: 1.2rem;  /* הקטן את הכותרת המשנית */
+  font-weight: 400;     /* צבע אפור מעט יותר בהיר */
+}
+
 .info-item {
   display: flex;
   align-items: center;
